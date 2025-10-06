@@ -174,6 +174,36 @@
                 required
               >
             </div>
+            
+            <!-- 商家注册额外字段 -->
+            <div v-if="registerForm.type === 'merchant'" class="merchant-fields">
+              <div class="form-group">
+                <label for="register-store-name">店铺名称 <span class="required">*</span></label>
+                <input 
+                  type="text" 
+                  id="register-store-name" 
+                  v-model="registerForm.storeName"
+                  placeholder="请输入您的店铺名称" 
+                  required
+                >
+              </div>
+              <div class="form-group">
+                <label for="register-canteen">所属食堂 <span class="required">*</span></label>
+                <select 
+                  id="register-canteen" 
+                  v-model="registerForm.canteen"
+                  required
+                >
+                  <option value="">请选择所属食堂</option>
+                  <option value="一食堂">一食堂</option>
+                  <option value="二食堂">二食堂</option>
+                  <option value="三食堂">三食堂</option>
+                  <option value="四食堂">四食堂</option>
+                  <option value="其他">其他</option>
+                </select>
+              </div>
+            </div>
+            
             <button type="submit" class="auth-btn">注册</button>
           </form>
         </div>

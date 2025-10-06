@@ -701,3 +701,69 @@
 .toast-error i {
     color: #e74c3c;
 }
+
+/* 商家注册额外字段样式 */
+.merchant-fields {
+    margin-top: 20px;
+    animation: fadeIn 0.4s ease-in;
+}
+
+.merchant-fields .form-group {
+    margin-bottom: 20px;
+}
+
+.merchant-fields label {
+    color: #333;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.merchant-fields .required {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.merchant-fields input,
+.merchant-fields select {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+.merchant-fields input:focus,
+.merchant-fields select:focus {
+    border-color: #e74c3c;
+    background: white;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+
+.merchant-fields input::placeholder {
+    color: #999;
+}
+
+/* 商家注册字段的过渡效果 */
+.merchant-fields-enter-active,
+.merchant-fields-leave-active {
+    transition: all 0.3s ease;
+    max-height: 200px;
+    overflow: hidden;
+}
+
+.merchant-fields-enter-from,
+.merchant-fields-leave-to {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+}
+
+.merchant-fields-enter-to,
+.merchant-fields-leave-from {
+    opacity: 1;
+    max-height: 200px;
+    transform: translateY(0);
+}
