@@ -35,3 +35,16 @@ frontend/
 - 多语言支持
 
 
+## 初次运行流程
+1. 安装Node.js 官方网站：https://nodejs.org/
+    验证安装成功 `node -v` 、`npm -v`
+    （PS: 如果遇到npm运行权限问题，参考 https://www.cnblogs.com/520BigBear/p/15579723.html）
+2. 进入本项目目录
+    ```cmd
+    npm install
+    ```
+3. 运行项目
+    ```cmd
+    npm run serve
+    ```
+    访问服务启动的网页
