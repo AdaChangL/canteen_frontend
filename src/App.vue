@@ -1,30 +1,47 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div id="app">
+    <router-view/>
+  </div>
 </template>
 
 <style>
+/* 导入全局样式 */
+@import url('./assets/css/merchant.css');
+@import url('./assets/css/user.css');
+@import url('./assets/css/style.css');
+@import url('./assets/css/auth.css');
+
+/* 导入Google字体 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+/* 导入Font Awesome图标 */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: #333;
+  background-color: #f8f9fa;
+  min-height: 100vh;
 }
 
-nav {
-  padding: 30px;
+/* 全局样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+html {
+  scroll-behavior: smooth;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+body {
+  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
 }
 </style>
