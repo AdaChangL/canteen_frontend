@@ -58,19 +58,6 @@
                 required
               >
             </div>
-            <div class="form-group">
-              <label for="captcha">验证码</label>
-              <div class="captcha-container">
-                <input 
-                  type="text" 
-                  id="captcha" 
-                  v-model="userLoginForm.captcha"
-                  placeholder="请输入验证码" 
-                  required
-                >
-                <span class="captcha-code">{{ userCaptchaCode }}</span>
-              </div>
-            </div>
             <button type="submit" class="auth-btn">登录</button>
             <div class="auth-links">
               <a href="#">找回密码</a>
@@ -101,19 +88,6 @@
                 placeholder="请输入密码" 
                 required
               >
-            </div>
-            <div class="form-group">
-              <label for="merchant-captcha">验证码</label>
-              <div class="captcha-container">
-                <input 
-                  type="text" 
-                  id="merchant-captcha" 
-                  v-model="merchantLoginForm.captcha"
-                  placeholder="请输入验证码" 
-                  required
-                >
-                <span class="captcha-code">{{ merchantCaptchaCode }}</span>
-              </div>
             </div>
             <button type="submit" class="auth-btn">商家登录</button>
           </form>
@@ -232,13 +206,11 @@ export default {
       activeTab: this.initialTab,
       userLoginForm: {
         username: '',
-        password: '',
-        captcha: ''
+        password: ''
       },
       merchantLoginForm: {
         username: '',
-        password: '',
-        captcha: ''
+        password: ''
       },
       registerForm: {
         type: '',
@@ -249,8 +221,6 @@ export default {
         storeName: '',
         canteen: ''
       },
-      userCaptchaCode: '',
-      merchantCaptchaCode: '',
       loading: false,
       errorMessage: ''
     }
@@ -277,27 +247,12 @@ export default {
       this.activeTab = tab
       // 切换标签页时清空错误消息
       this.errorMessage = ''
-      // 切换标签页时重新生成验证码
-      this.generateCaptcha()
     },
     async handleUserLogin() {
       if (this.loading) return
       
       console.log('=== 用户登录调试信息 ===')
       console.log('输入的用户名:', this.userLoginForm.username)
-      console.log('输入的验证码:', this.userLoginForm.captcha)
-      console.log('当前验证码:', this.userCaptchaCode)
-      
-      // 前端验证码验证
-      if (this.userLoginForm.captcha.toUpperCase() !== this.userCaptchaCode) {
-        console.log('验证码验证失败')
-        this.errorMessage = '验证码错误，请重新输入'
-        // 重新生成验证码
-        this.generateCaptcha()
-        return
-      }
-      
-      console.log('验证码验证通过，开始API请求')
       
       this.loading = true
       this.errorMessage = ''
@@ -305,8 +260,7 @@ export default {
       try {
         const loginData = {
           username: this.userLoginForm.username,
-          password: this.userLoginForm.password,
-          captcha: this.userLoginForm.captcha
+          password: this.userLoginForm.password
         }
         
         console.log('发送登录请求数据:', { ...loginData, password: '***' })
@@ -333,15 +287,11 @@ export default {
         } else {
           console.log('登录失败，错误信息:', response.message)
           this.errorMessage = response.message || '登录失败'
-          // 登录失败时重新生成验证码
-          this.generateCaptcha()
         }
       } catch (error) {
         console.error('用户登录失败:', error)
         console.log('错误详情:', error.response ? error.response.data : error.message)
-        this.errorMessage = '登录失败，请检查用户名、密码和验证码'
-        // 登录失败时重新生成验证码
-        this.generateCaptcha()
+        this.errorMessage = '登录失败，请检查用户名和密码'
       } finally {
         this.loading = false
       }
@@ -350,22 +300,13 @@ export default {
     async handleMerchantLogin() {
       if (this.loading) return
       
-      // 前端验证码验证
-      if (this.merchantLoginForm.captcha.toUpperCase() !== this.merchantCaptchaCode) {
-        this.errorMessage = '验证码错误，请重新输入'
-        // 重新生成验证码
-        this.generateCaptcha()
-        return
-      }
-      
       this.loading = true
       this.errorMessage = ''
       
       try {
         const response = await authAPI.merchantLogin({
           username: this.merchantLoginForm.username,
-          password: this.merchantLoginForm.password,
-          captcha: this.merchantLoginForm.captcha
+          password: this.merchantLoginForm.password
         })
         
         if (response.success) {
@@ -383,14 +324,10 @@ export default {
           this.$emit('close')
         } else {
           this.errorMessage = response.message || '商家登录失败'
-          // 登录失败时重新生成验证码
-          this.generateCaptcha()
         }
       } catch (error) {
         console.error('商家登录失败:', error)
-        this.errorMessage = '商家登录失败，请检查账号、密码和验证码'
-        // 登录失败时重新生成验证码
-        this.generateCaptcha()
+        this.errorMessage = '商家登录失败，请检查账号和密码'
       } finally {
         this.loading = false
       }
@@ -453,34 +390,12 @@ export default {
       } finally {
         this.loading = false
       }
-    },
-    
-    async generateCaptcha() {
-      try {
-        const response = await authAPI.getCaptcha()
-        if (response.success) {
-          this.userCaptchaCode = response.data.captchaCode
-          this.merchantCaptchaCode = response.data.captchaCode
-        } else {
-          // 如果API失败，使用本地生成
-          this.userCaptchaCode = Math.random().toString(36).substring(2, 8).toUpperCase()
-          this.merchantCaptchaCode = Math.random().toString(36).substring(2, 8).toUpperCase()
-        }
-      } catch (error) {
-        console.error('获取验证码失败:', error)
-        // 使用本地生成作为fallback
-        this.userCaptchaCode = Math.random().toString(36).substring(2, 8).toUpperCase()
-        this.merchantCaptchaCode = Math.random().toString(36).substring(2, 8).toUpperCase()
-      }
     }
   },
   watch: {
     initialTab(newTab) {
       this.activeTab = newTab
     }
-  },
-  mounted() {
-    this.generateCaptcha()
   }
 }
 </script>

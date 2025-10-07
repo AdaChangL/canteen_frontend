@@ -162,34 +162,6 @@
     font-size: 1.1rem;
 }
 
-.captcha-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.captcha-container input {
-    flex: 1;
-}
-
-.captcha-code {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
-    padding: 12px 15px;
-    border-radius: 8px;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    min-width: 120px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.captcha-code:hover {
-    transform: scale(1.05);
-}
 
 .auth-btn {
     width: 100%;

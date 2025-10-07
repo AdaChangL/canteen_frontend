@@ -74,8 +74,6 @@ export const authAPI = {
   // 用户注册
   register: (data) => api.post('/auth/register', data),
   
-  // 获取验证码
-  getCaptcha: () => api.get('/captcha'),
   
   // 退出登录
   logout: () => {
